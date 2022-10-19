@@ -7,58 +7,35 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 10f;
 
-    private CharacterController controller;
-    private Vector3 playerVelocity;
-    private float jumpHeight = 1f;
-    private float gravity = -1f;
-    private bool groundedPlayer;
+    private CharacterController _controller;
+    private Vector3 _playerVelocity;
+    private float _jumpHeight = 1f;
+    private float _gravity = -1f;
+    private bool _groundedPlayer;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        controller = gameObject.GetComponent<CharacterController>();
+        _controller = gameObject.GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // wasd movement mechanics
-        float xMove = Input.GetAxis("Horizontal");
-        float zMove = Input.GetAxis("Vertical");
-
-        Vector3 movement = transform.right * xMove + transform.forward * zMove;
-
-        controller.Move(movement * moveSpeed * Time.deltaTime);
-
-        /*
-        // player grounding
-        if (controller.isGrounded && playerVelocity.y < 0)
+        Vector3 move = Input.GetAxis("Horizontal") * transform.right * moveSpeed + Input.GetAxis("Vertical")* transform.forward * moveSpeed;
+        print(move);
+        _groundedPlayer = _controller.isGrounded;
+        if(_groundedPlayer && _playerVelocity.y < 0)
         {
-            playerVelocity.y = 0f;
+            _playerVelocity.y = 0f;
         }
-
-        // jump mechanic
-        if (Input.GetKeyDown(KeyCode.Space))
+        // jump
+        if(Input.GetButtonDown("Jump") && _groundedPlayer)
         {
-            Debug.Log("space pressed");
-            Debug.Log(controller.isGrounded);
+            _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * gravity);
         }
-        else
-        {
-            Debug.Log(controller.isGrounded);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
-        {
-            Debug.Log("jump");
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3f * gravity);
-        }
-        */
-
-        // gravity mechanic
-        playerVelocity.y += gravity * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
-
+        _playerVelocity.y += gravity * Time.deltaTime;
+        _controller.Move((_playerVelocity+move) * Time.deltaTime);
     }
 }
