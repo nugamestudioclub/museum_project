@@ -7,35 +7,51 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 10f;
 
-    private CharacterController _controller;
-    private Vector3 _playerVelocity;
-    private float _jumpHeight = 1f;
-    private float _gravity = -1f;
-    private bool _groundedPlayer;
+    private CharacterController controller;
+    public Vector3 playerVelocity;
+    [SerializeField]
+    private float jumpHeight = 2f;
+    [SerializeField]
+    private float gravity = -10f;
 
+    private Transform groundCheck;
+    private float groundDistance = 0.5f;
+    public LayerMask groundMask;
+    private bool isGrounded;
 
     // Start is called before the first frame update
     void Start()
     {
-        _controller = gameObject.GetComponent<CharacterController>();
+        controller = gameObject.GetComponent<CharacterController>();
+        groundCheck = transform.Find("GroundCheck").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 move = Input.GetAxis("Horizontal") * transform.right * moveSpeed + Input.GetAxis("Vertical")* transform.forward * moveSpeed;
-        print(move);
-        _groundedPlayer = _controller.isGrounded;
-        if(_groundedPlayer && _playerVelocity.y < 0)
+        // ground check
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (isGrounded && playerVelocity.y < 0)
         {
-            _playerVelocity.y = 0f;
+            playerVelocity.y = -2f;
         }
+
+        // wasd player movement
+        float xMove = Input.GetAxis("Horizontal");
+        float zMove = Input.GetAxis("Vertical");
+        Vector3 xzMove = (transform.right * xMove + transform.forward * zMove) * moveSpeed;
+
         // jump
-        if(Input.GetButtonDown("Jump") && _groundedPlayer)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravity);
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        _playerVelocity.y += _gravity * Time.deltaTime;
-        _controller.Move((_playerVelocity+move) * Time.deltaTime);
+
+        // gravity
+        playerVelocity.y += gravity * Time.deltaTime;
+
+        // final player move
+        controller.Move((playerVelocity + xzMove) * Time.deltaTime);
     }
 }
