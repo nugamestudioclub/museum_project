@@ -33,9 +33,9 @@ public class PlayerMovement : MonoBehaviour
         // jump
         if(Input.GetButtonDown("Jump") && _groundedPlayer)
         {
-            _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * gravity);
+            _playerVelocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravity);
         }
-        _playerVelocity.y += gravity * Time.deltaTime;
+        _playerVelocity.y += _gravity * Time.deltaTime;
         _controller.Move((_playerVelocity+move) * Time.deltaTime);
     }
 }
