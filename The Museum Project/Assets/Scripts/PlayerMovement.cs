@@ -5,7 +5,11 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed = 10f;
+    private float walkSpeed = 2f;
+    [SerializeField]
+    private float sprintSpeed = 10f;
+    private float moveSpeed;
+    private float sprintBonus;
 
     private CharacterController controller;
     public Vector3 playerVelocity;
@@ -14,16 +18,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float gravity = -10f;
 
-    private Transform groundCheck;
-    private float groundDistance = 0.5f;
-    public LayerMask groundMask;
     private bool isGrounded;
 
     // Start is called before the first frame update
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
-        groundCheck = transform.Find("GroundCheck").transform;
+
+        moveSpeed = walkSpeed;
+        sprintBonus = sprintSpeed - walkSpeed;
     }
 
     // Update is called once per frame
@@ -37,11 +40,13 @@ public class PlayerMovement : MonoBehaviour
         {
             playerVelocity.y = -2f;
         }
-        
+
+        // sprint mechanic
+        float sprintInput = Input.GetAxis("Sprint");
         // wasd player movement
         float xMove = Input.GetAxis("Horizontal");
         float zMove = Input.GetAxis("Vertical");
-        Vector3 xzMove = (transform.right * xMove + transform.forward * zMove) * moveSpeed;
+        Vector3 xzMove = (transform.right * xMove + transform.forward * zMove) * (moveSpeed + sprintInput * sprintBonus);
 
         // jump
         if (Input.GetButtonDown("Jump") && isGrounded)
