@@ -30,13 +30,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // ground check
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        // isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = controller.isGrounded;
 
         if (isGrounded && playerVelocity.y < 0)
         {
             playerVelocity.y = -2f;
         }
-
+        
         // wasd player movement
         float xMove = Input.GetAxis("Horizontal");
         float zMove = Input.GetAxis("Vertical");
@@ -53,5 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
         // final player move
         controller.Move((playerVelocity + xzMove) * Time.deltaTime);
+
+        //Debug.Log(controller.isGrounded);
     }
 }
