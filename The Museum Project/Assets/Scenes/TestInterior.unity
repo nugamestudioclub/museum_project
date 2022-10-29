@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 66751289}
   - component: {fileID: 66751288}
   m_Layer: 5
-  m_Name: Hunger Back
+  m_Name: Hunger Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -376,7 +376,7 @@ GameObject:
   - component: {fileID: 107060384}
   - component: {fileID: 107060383}
   m_Layer: 5
-  m_Name: Health Back
+  m_Name: Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 345450453}
   - component: {fileID: 345450452}
   m_Layer: 5
-  m_Name: Hydro Value
+  m_Name: Hydration Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12054,7 +12054,7 @@ GameObject:
   - component: {fileID: 1120031191}
   - component: {fileID: 1120031190}
   m_Layer: 5
-  m_Name: Hydro Back
+  m_Name: Hydration Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23533,6 +23533,27 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1923120500 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6608640579937559673, guid: 1b8fae63fe5d34d9187d273b37f440f0, type: 3}
+  m_PrefabInstance: {fileID: 2143978419}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1923120505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1923120500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d818a45884a4068a5ac6a6cbdb184e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  healthDepleteRate: 1
+  maxHunger: 30
+  maxHydration: 10
 --- !u!1 &2019898964 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2293523869546784257, guid: 1b8fae63fe5d34d9187d273b37f440f0, type: 3}
@@ -23680,7 +23701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &2040459964
 Light:
   m_ObjectHideFlags: 0
@@ -23892,7 +23913,7 @@ GameObject:
   - component: {fileID: 2067990026}
   - component: {fileID: 2067990025}
   m_Layer: 5
-  m_Name: Temp Back
+  m_Name: Temp Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
