@@ -44,18 +44,18 @@ public class PlayerStats : MonoBehaviour
     {
         if (isAlive)
         {
-            tickStats();
+            TickStats();
         }
     }
 
     //called each frame to update stat values
-    public void tickStats()
+    public void TickStats()
     {
-        tickHunger();
-        tickHydration();
+        TickHunger();
+        TickHydration();
         if (hunger == 0f || hydration == 0f)
         {
-            changeHealth(-healthDepleteRate * Time.deltaTime);
+            ChangeHealth(-healthDepleteRate * Time.deltaTime);
         }
         if (health == 0)
         {
@@ -64,24 +64,24 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-    public void tickStat(ref float stat, float maxStat, float change, ref Image statContent)
+    public void ChangeStat(ref float stat, float maxStat, float change, ref Image statContent)
     {
         stat = Mathf.Clamp(stat + change, 0f, maxStat);
         statContent.fillAmount = Mathf.Clamp(stat / maxStat, 0f, 1f);
     }
 
-    public void tickHunger()
+    public void TickHunger()
     {
-        tickStat(ref hunger, maxHunger, -Time.deltaTime, ref hungerContent);
+        ChangeStat(ref hunger, maxHunger, -Time.deltaTime, ref hungerContent);
     }
 
-    public void tickHydration()
+    public void TickHydration()
     {
-        tickStat(ref hydration, maxHydration, -Time.deltaTime, ref hydrationContent);
+        ChangeStat(ref hydration, maxHydration, -Time.deltaTime, ref hydrationContent);
     }
 
-    public void changeHealth(float change)
+    public void ChangeHealth(float change)
     {
-        tickStat(ref health, maxHealth, change, ref healthContent);
+        ChangeStat(ref health, maxHealth, change, ref healthContent);
     }
 }
