@@ -1,39 +1,85 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ConstructManager : MonoBehaviour
 {
-    private float water;
     [SerializeField]
-    private float waterMax = 50f;
+    private bool isMaker = true;
+
     [SerializeField]
-    private float waterRate = 1f;
-    private float food;
+    private string resourceName = "";
+    private float resource = 0f;
     [SerializeField]
-    private float foodMax = 50f;
+    private float resourceMax = 50f;
     [SerializeField]
-    private float foodRate = 1f;
+    private float resourceRate = 1f;
+
+    private TMP_Text resourceIndicator;
+
+    [SerializeField]
+    private float radiusEffect = 5f;
+    private SphereCollider sphereCollider;
 
     // Start is called before the first frame update
     void Start()
     {
-        water = 0f;
-        food = 0f;
+        resourceIndicator = transform.Find("ResourceIndicator").GetComponent<TMP_Text>();
+        sphereCollider = gameObject.GetComponent<SphereCollider>();
+
+        if (isMaker)
+        {
+            sphereCollider.enabled = false;
+        }
+        if (!isMaker)
+        {
+            resourceIndicator.enabled = false;
+            sphereCollider.radius = radiusEffect;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        water = Mathf.Clamp(water + waterRate * Time.deltaTime, 0f, waterMax);
-        food = Mathf.Clamp(food + foodRate * Time.deltaTime, 0f, foodMax);
+        if (isMaker)
+        {
+            if (resource != resourceMax)
+            {
+                resource = Mathf.Clamp(resource + resourceRate * Time.deltaTime, 0f, resourceMax);
+                resourceIndicator.SetText(resourceName + ":\n" + Mathf.FloorToInt(resource));
+            }
+        }
+        else
+        {
+
+        }
     }
 
     // called whenever the player collects the resources from this construct
-    public (float waterAmt, float foodAmt) CollectAll()
+    public float CollectAll()
     {
-        water = 0f;
-        food = 0f;
-        return (water, food);
+        if (isMaker)
+        {
+            float amount = resource;
+            resource = 0f;
+            return amount;
+        }
+        return 0f;
+    }
+
+    public void Disassemble()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public bool IsMaker()
+    {
+        return isMaker;
+    }
+
+    public string GetResource()
+    {
+        return resourceName;
     }
 }

@@ -72,16 +72,38 @@ public class PlayerStats : MonoBehaviour
 
     public void TickHunger()
     {
-        ChangeStat(ref hunger, maxHunger, -Time.deltaTime, ref hungerContent);
+        ChangeHunger(-Time.deltaTime);
     }
 
     public void TickHydration()
     {
-        ChangeStat(ref hydration, maxHydration, -Time.deltaTime, ref hydrationContent);
+        ChangeHydration(-Time.deltaTime);
     }
 
     public void ChangeHealth(float change)
     {
         ChangeStat(ref health, maxHealth, change, ref healthContent);
+    }
+
+    public void ChangeHunger(float change)
+    {
+        ChangeStat(ref hunger, maxHunger, change, ref hungerContent);
+    }
+
+    public void ChangeHydration(float change)
+    {
+        ChangeStat(ref hydration, maxHydration, change, ref hydrationContent);
+    }
+
+    public void ConsumeResource(float change, string name)
+    {
+        if (name == "Food")
+        {
+            ChangeHunger(change);
+        }
+        else if (name == "Water")
+        {
+            ChangeHydration(change);
+        }
     }
 }

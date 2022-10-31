@@ -27,7 +27,9 @@ public class PlayerInteractions : MonoBehaviour
             {
                 if (hit.collider.gameObject.tag == "Construct")
                 {
-                    //hit.collider.gameObject.GetComponent<ConstructManager>();
+                    ConstructManager manager = hit.collider.gameObject.GetComponent<ConstructManager>();
+                    float change = manager.CollectAll();
+                    playerStats.ConsumeResource(change, manager.GetResource());
                 }
             }
         }
@@ -39,7 +41,7 @@ public class PlayerInteractions : MonoBehaviour
             {
                 if (hit.collider.gameObject.tag == "Construct")
                 {
-                    Destroy(hit.collider.gameObject);
+                    hit.collider.gameObject.GetComponent<ConstructManager>().Disassemble();
                 }
             }
         }
@@ -51,7 +53,8 @@ public class PlayerInteractions : MonoBehaviour
             {
                 if (Vector3.Normalize(hit.normal) == Vector3.up)
                 {
-                    Instantiate(foodMakerPrefab, hit.point + Vector3.up * 0.3f, Quaternion.identity);
+                    GameObject construct = Instantiate(foodMakerPrefab, hit.point + Vector3.up * 0.3f, Quaternion.identity);
+                    //construct.AddComponent<ConstructManager>();
                 }    
             }
         }
