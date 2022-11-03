@@ -20,22 +20,23 @@ public class ConstructManager : MonoBehaviour
 
     [SerializeField]
     private float radiusEffect = 5f;
-    private SphereCollider sphereCollider;
+    private GameObject player;
+    private PlayerStats playerStats;
 
     // Start is called before the first frame update
     void Start()
     {
         resourceIndicator = transform.Find("ResourceIndicator").GetComponent<TMP_Text>();
-        sphereCollider = gameObject.GetComponent<SphereCollider>();
 
         if (isMaker)
         {
-            sphereCollider.enabled = false;
+            resourceIndicator = transform.Find("ResourceIndicator").GetComponent<TMP_Text>();
         }
-        if (!isMaker)
+        else
         {
             resourceIndicator.enabled = false;
-            sphereCollider.radius = radiusEffect;
+            player = GameObject.FindGameObjectWithTag("Player");
+            playerStats = player.GetComponent<PlayerStats>();
         }
     }
 
@@ -52,7 +53,10 @@ public class ConstructManager : MonoBehaviour
         }
         else
         {
-
+            if (Vector3.Distance(player.transform.position, transform.position) <= radiusEffect)
+            {
+                playerStats.ChangeHealth(resourceRate * Time.deltaTime);
+            }
         }
     }
 

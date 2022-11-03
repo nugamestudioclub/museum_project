@@ -9,12 +9,17 @@ public class PlayerInteractions : MonoBehaviour
 
     private PlayerStats playerStats;
 
+    private GameObject selectedConstruct;
     public GameObject foodMakerPrefab;
+    public GameObject waterMakerPrefab;
+    public GameObject healthAreaPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
         playerStats = gameObject.GetComponent<PlayerStats>();
+
+        selectedConstruct = foodMakerPrefab;
     }
 
     // Update is called once per frame
@@ -22,40 +27,78 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxInteractDistance))
-            {
-                if (hit.collider.gameObject.tag == "Construct")
-                {
-                    ConstructManager manager = hit.collider.gameObject.GetComponent<ConstructManager>();
-                    float change = manager.CollectAll();
-                    playerStats.ConsumeResource(change, manager.GetResource());
-                }
-            }
+            InteractWithObject();
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxInteractDistance))
-            {
-                if (hit.collider.gameObject.tag == "Construct")
-                {
-                    hit.collider.gameObject.GetComponent<ConstructManager>().Disassemble();
-                }
-            }
+            DisassembleObject();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxInteractDistance))
+            PlaceObject();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            selectedConstruct = foodMakerPrefab;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            selectedConstruct = waterMakerPrefab;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            selectedConstruct = healthAreaPrefab;
+        }
+    }
+
+    public void InteractWithObject()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxInteractDistance))
+        {
+            if (hit.collider.gameObject.tag == "Construct")
             {
-                if (Vector3.Normalize(hit.normal) == Vector3.up)
+                ConstructMaker maker = hit.collider.gameObject.GetComponent<ConstructMaker>();
+                if (maker != null)
                 {
-                    GameObject construct = Instantiate(foodMakerPrefab, hit.point + Vector3.up * 0.3f, Quaternion.identity);
-                    //construct.AddComponent<ConstructManager>();
-                }    
+                    float change = maker.Interact();
+                    playerStats.ConsumeResource(change, maker.GetResource());
+                }
+            }
+        }
+    }
+
+    public void DisassembleObject()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxInteractDistance))
+        {
+            if (hit.collider.gameObject.tag == "Construct")
+            {
+                int reward = hit.collider.gameObject.GetComponent<ConstructBase>().Disassemble();
+                playerStats.ChangeNanites(reward);
+            }
+        }
+    }
+
+    public void PlaceObject()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxInteractDistance))
+        {
+            if (Vector3.Normalize(hit.normal) == Vector3.up && hit.collider.gameObject.tag != "Construct")
+            {
+                int cost = selectedConstruct.GetComponent<ConstructBase>().GetCost();
+                if (cost <= playerStats.GetNanites())
+                {
+                    GameObject construct = Instantiate(selectedConstruct, hit.point + Vector3.up * 0.3f, Quaternion.identity);
+                    playerStats.ChangeNanites(-cost);
+                }
             }
         }
     }

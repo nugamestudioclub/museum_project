@@ -350,9 +350,12 @@ GameObject:
   - component: {fileID: 2293523869380541021}
   - component: {fileID: 2293523869380541011}
   - component: {fileID: 2293523869380541010}
+  - component: {fileID: 3657999443227660170}
+  - component: {fileID: 8166471259580560430}
+  - component: {fileID: 7412894838924617719}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -405,11 +408,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3ecedebba2564ed7ad0bca94c48c9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 2
-  sprintSpeed: 10
+  walkSpeed: 3.5
+  sprintSpeed: 7
   playerVelocity: {x: 0, y: 0, z: 0}
-  jumpHeight: 2
-  gravity: -10
+  jumpHeight: 1.25
+  gravity: -15
 --- !u!54 &2293523869380541010
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -426,3 +429,50 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &3657999443227660170
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6608640579937559673}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8166471259580560430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6608640579937559673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d818a45884a4068a5ac6a6cbdb184e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  healthDepleteRate: 0.1
+  maxHunger: 30
+  maxHydration: 10
+  nanites: 10
+--- !u!114 &7412894838924617719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6608640579937559673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8444a0389c8844a89130facf25837a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxInteractDistance: 100
+  foodMakerPrefab: {fileID: 8434604302579928175, guid: 7cf82d4df6098439f9ca34f87caa0e60, type: 3}
+  waterMakerPrefab: {fileID: 8434604302579928175, guid: 987e6c2e1c25b44cf97ff03a4db118ac, type: 3}
+  healthAreaPrefab: {fileID: 8434604302579928175, guid: 178aee54982bb4eb7b2adfaa529f1618, type: 3}

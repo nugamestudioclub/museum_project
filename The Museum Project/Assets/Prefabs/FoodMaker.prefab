@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 5000841544868535152}
   - component: {fileID: 2984959069524776611}
   m_Layer: 0
-  m_Name: WaterMaker
+  m_Name: FoodMaker
   m_TagString: Construct
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,6 +284,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   naniteCost: 1
-  resourceName: Water
+  resourceName: Food
   resourceMax: 50
   resourceRate: 1

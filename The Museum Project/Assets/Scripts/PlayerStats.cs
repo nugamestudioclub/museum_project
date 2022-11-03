@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -19,10 +20,14 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private float maxHydration = 10f;
 
+    [SerializeField]
+    private int nanites = 10;
+
     private GameObject statUI;
     private Image healthContent;
     private Image hungerContent;
     private Image hydrationContent;
+    private TMP_Text naniteContent;
 
     private bool isAlive = true;
 
@@ -37,6 +42,9 @@ public class PlayerStats : MonoBehaviour
         healthContent = statUI.transform.Find("Health Bar/Health Value").gameObject.GetComponent<Image>();
         hungerContent = statUI.transform.Find("Hunger Bar/Hunger Value").gameObject.GetComponent<Image>();
         hydrationContent = statUI.transform.Find("Hydration Bar/Hydration Value").gameObject.GetComponent<Image>();
+        naniteContent = statUI.transform.Find("Nanite Bar").gameObject.GetComponent<TMP_Text>();
+
+        SetNanites(nanites);
     }
 
     // Update is called once per frame
@@ -66,8 +74,11 @@ public class PlayerStats : MonoBehaviour
 
     public void ChangeStat(ref float stat, float maxStat, float change, ref Image statContent)
     {
-        stat = Mathf.Clamp(stat + change, 0f, maxStat);
-        statContent.fillAmount = Mathf.Clamp(stat / maxStat, 0f, 1f);
+        if (isAlive)
+        {
+            stat = Mathf.Clamp(stat + change, 0f, maxStat);
+            statContent.fillAmount = Mathf.Clamp(stat / maxStat, 0f, 1f);
+        }
     }
 
     public void TickHunger()
@@ -105,5 +116,25 @@ public class PlayerStats : MonoBehaviour
         {
             ChangeHydration(change);
         }
+        else if (name == "Health")
+        {
+            ChangeHealth(change);
+        }
+    }
+
+    public int GetNanites()
+    {
+        return nanites;
+    }
+
+    public void SetNanites(int s)
+    {
+        nanites = s;
+        naniteContent.SetText(nanites.ToString());
+    }
+
+    public void ChangeNanites(int c)
+    {
+        SetNanites(nanites + c);
     }
 }
