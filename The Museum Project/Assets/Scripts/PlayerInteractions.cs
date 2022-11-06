@@ -27,6 +27,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            Debug.Log("R Pressed");
             InteractWithObject();
         }
 
@@ -59,8 +60,10 @@ public class PlayerInteractions : MonoBehaviour
     public void InteractWithObject()
     {
         RaycastHit hit;
+        Debug.Log("interact");
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxInteractDistance))
         {
+            Debug.Log(hit.collider.gameObject);
             if (hit.collider.gameObject.tag == "Construct")
             {
                 ConstructMaker maker = hit.collider.gameObject.GetComponent<ConstructMaker>();
