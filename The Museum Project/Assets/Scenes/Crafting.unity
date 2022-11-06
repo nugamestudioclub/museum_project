@@ -3379,6 +3379,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2293523868396741712, guid: 1b8fae63fe5d34d9187d273b37f440f0, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 448fa634a89cb284fb3e0c102ac6b184, type: 2}
     - target: {fileID: 2293523869546784261, guid: 1b8fae63fe5d34d9187d273b37f440f0, type: 3}
       propertyPath: mouseSensitivity
       value: 400
