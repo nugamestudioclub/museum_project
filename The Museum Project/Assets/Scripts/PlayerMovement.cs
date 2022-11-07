@@ -4,29 +4,34 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region Variables
+
     [SerializeField]
     private float walkSpeed = 2f;
     [SerializeField]
     private float sprintSpeed = 10f;
-    private float moveSpeed;
-    private float sprintBonus;
+    private float _moveSpeed;
+    private float _sprintBonus;
 
-    private CharacterController controller;
+    private CharacterController _controller;
     public Vector3 playerVelocity;
     [SerializeField]
     private float jumpHeight = 2f;
     [SerializeField]
     private float gravity = -10f;
 
-    private bool isGrounded;
+    private bool _isGrounded;
+    
+    #endregion
+
 
     // Start is called before the first frame update
     void Start()
     {
-        controller = gameObject.GetComponent<CharacterController>();
+        _controller = gameObject.GetComponent<CharacterController>();
 
-        moveSpeed = walkSpeed;
-        sprintBonus = sprintSpeed - walkSpeed;
+        _moveSpeed = walkSpeed;
+        _sprintBonus = sprintSpeed - walkSpeed;
     }
 
     // Update is called once per frame
@@ -34,9 +39,9 @@ public class PlayerMovement : MonoBehaviour
     {
         // ground check
         // isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        isGrounded = controller.isGrounded;
+        _isGrounded = _controller.isGrounded;
 
-        if (isGrounded && playerVelocity.y < 0)
+        if (_isGrounded && playerVelocity.y < 0)
         {
             playerVelocity.y = -2f;
         }
@@ -46,10 +51,10 @@ public class PlayerMovement : MonoBehaviour
         // wasd player movement
         float xMove = Input.GetAxis("Horizontal");
         float zMove = Input.GetAxis("Vertical");
-        Vector3 xzMove = (transform.right * xMove + transform.forward * zMove) * (moveSpeed + sprintInput * sprintBonus);
+        Vector3 xzMove = (transform.right * xMove + transform.forward * zMove) * (_moveSpeed + sprintInput * _sprintBonus);
 
         // jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && _isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -58,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         playerVelocity.y += gravity * Time.deltaTime;
 
         // final player move
-        controller.Move((playerVelocity + xzMove) * Time.deltaTime);
+        _controller.Move((playerVelocity + xzMove) * Time.deltaTime);
 
         //Debug.Log(controller.isGrounded);
     }
