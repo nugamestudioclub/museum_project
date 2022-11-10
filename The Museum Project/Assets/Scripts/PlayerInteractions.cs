@@ -55,15 +55,18 @@ public class PlayerInteractions : MonoBehaviour
         {
             selectedConstruct = healthAreaPrefab;
         }
+        //Debug.DrawRay(transform.position + new Vector3(0f, 0.6f, 0f), Camera.main.transform.forward * 10f, Color.green, 5f);
     }
 
     public void InteractWithObject()
     {
         RaycastHit hit;
         Debug.Log("interact");
+        //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward, Color.green, 3f);
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxInteractDistance))
         {
             Debug.Log(hit.collider.gameObject);
+            //Debug.DrawRay(Camera.main.transform.position, hit.point, Color.green, 5f);
             if (hit.collider.gameObject.tag == "Construct")
             {
                 ConstructMaker maker = hit.collider.gameObject.GetComponent<ConstructMaker>();
