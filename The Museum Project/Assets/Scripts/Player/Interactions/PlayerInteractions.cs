@@ -9,17 +9,20 @@ public class PlayerInteractions : MonoBehaviour
 
     private PlayerStats playerStats;
 
-    private GameObject selectedConstruct;
+    private static GameObject selectedConstruct;
+    /*
     public GameObject foodMakerPrefab;
     public GameObject waterMakerPrefab;
     public GameObject healthAreaPrefab;
+    */
 
     // Start is called before the first frame update
     void Start()
     {
         playerStats = gameObject.GetComponent<PlayerStats>();
 
-        selectedConstruct = foodMakerPrefab;
+        //selectedConstruct = foodMakerPrefab;
+        selectedConstruct = null;
     }
 
     // Update is called once per frame
@@ -41,6 +44,7 @@ public class PlayerInteractions : MonoBehaviour
             PlaceObject();
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             selectedConstruct = foodMakerPrefab;
@@ -55,6 +59,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             selectedConstruct = healthAreaPrefab;
         }
+        */
         //Debug.DrawRay(transform.position + new Vector3(0f, 0.6f, 0f), Camera.main.transform.forward * 10f, Color.green, 5f);
     }
 
@@ -107,5 +112,10 @@ public class PlayerInteractions : MonoBehaviour
                 }
             }
         }
+    }
+
+    public static void SelectConstruct(GameObject s)
+    {
+        selectedConstruct = s;
     }
 }
